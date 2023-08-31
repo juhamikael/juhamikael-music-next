@@ -1,0 +1,15 @@
+.zoom:hover {
+  transform: scale(1.05);
+}
+
+.zoom {
+  transition: transform 0.3s ease-in-out;
+}
+
+.iconZoom {
+  transition: transform 0.3s ease-in-out;
+}
+
+.iconZoom:hover {
+  transform: scale(1.2);
+}
