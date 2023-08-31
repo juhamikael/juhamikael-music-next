@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import { BsFillMoonFill as Moon } from "react-icons/bs";
@@ -16,19 +16,16 @@ export const ToggleNightMode: FC<ToggleNightModeProps> = ({
   hideBackground = false,
   ...props
 }) => {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
-  React.useEffect(() => {
-    console.log("theme changed");
-  }, [theme]);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const toggleTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
-  };
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className={`${className}`}>
@@ -36,7 +33,7 @@ export const ToggleNightMode: FC<ToggleNightModeProps> = ({
         <Button
           id="toggle-nightmode"
           aria-label="Toggle nightmode"
-          onClick={toggleTheme}
+          onClick={() => setTheme("dark")}
           className={`w-fit h-10 gap-4 items-center text-primary rounded-xl p-2 ${
             hideBackground
               ? "bg-transparent  hover:bg-primary/20 hover:text-primary"
@@ -50,7 +47,7 @@ export const ToggleNightMode: FC<ToggleNightModeProps> = ({
           id="toggle-nightmode"
           aria-label="Toggle nightmode"
           variant="outline"
-          onClick={toggleTheme}
+          onClick={() => setTheme("light")}
           className={`w-fit h-10 gap-4 rounded-xl p-2 opacity-100 text-primary
           ${
             hideBackground
