@@ -3,22 +3,20 @@ import { LogoDark, LogoLight } from "@/components/svgs";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 const ShowLogo = () => {
-  const { theme: initialTheme } = useTheme();
-  const defaultTheme = "dark";
-
-  const [theme, setTheme] = useState<string | null>(
-    initialTheme || defaultTheme
-  );
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
-    if (initialTheme) {
-      setTheme(initialTheme);
-    }
-  }, [initialTheme]);
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <>
-      {theme === "dark" && <LogoDark className="w-52 h-52" />}
+      {theme === "dark" || (mounted && <LogoDark className="w-52 h-52" />)}
       {theme === "light" && <LogoLight className="w-52 h-52" />}
     </>
   );

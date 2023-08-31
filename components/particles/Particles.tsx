@@ -8,18 +8,12 @@ import { loadSlim } from "tsparticles-slim";
 import { useTheme } from "next-themes";
 
 const ParticlesComponent = () => {
-  const { theme: initialTheme } = useTheme();
-  const defaultTheme = "dark";
-
-  const [theme, setTheme] = useState<string | null>(
-    initialTheme || defaultTheme
-  );
+  const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
-    if (initialTheme) {
-      setTheme(initialTheme);
-    }
-  }, [initialTheme]);
+    setMounted(true);
+  }, []);
 
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
@@ -32,8 +26,12 @@ const ParticlesComponent = () => {
     []
   );
 
+  if (!mounted) {
+    return null;
+  }
+
   const particlesOptions =
-    theme === "dark" ? particlesConfigDarkTheme : particlesConfigLightTheme;
+    theme === "light" ? particlesConfigLightTheme : particlesConfigDarkTheme;
 
   return (
     <Particles
