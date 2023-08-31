@@ -16,8 +16,15 @@ const ShowLogo = () => {
 
   return (
     <>
-      {theme === "dark" || (mounted && <LogoDark className="w-52 h-52" />)}
-      {theme === "light" && <LogoLight className="w-52 h-52" />}
+      {theme === "system" && mounted === true && (
+        <LogoDark className="w-52 h-52" />
+      )}
+      {theme === "dark" && mounted === true && (
+        <LogoDark className="w-52 h-52" />
+      )}
+      {theme === "light" && mounted === true && (
+        <LogoLight className="w-52 h-52" />
+      )}
     </>
   );
 };
