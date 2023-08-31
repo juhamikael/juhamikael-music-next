@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import style from "./embla.module.css";
 import Image from "next/image";
@@ -14,9 +14,6 @@ import Link from "next/link";
 
 export const EmblaCarousel = ({ projects }: { projects: IReleases[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-  useEffect(() => {
-    if (emblaApi) console.log(emblaApi.slideNodes());
-  }, [emblaApi]);
 
   return (
     <div className="flex justify-center flex-col ">
@@ -31,10 +28,11 @@ export const EmblaCarousel = ({ projects }: { projects: IReleases[] }) => {
             >
               <Image
                 src={project.imageUrl || ""}
-                alt=""
+                alt={project._id}
                 width={1200}
                 height={1200}
                 className="rounded-xl"
+                priority
               />
             </Link>
           ))}
